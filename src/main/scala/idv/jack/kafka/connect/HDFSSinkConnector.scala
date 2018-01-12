@@ -14,7 +14,6 @@ class HDFSSinkConnector extends SinkConnector{
 
   override def start(props: util.Map[String, String]): Unit = {
     //TODO
-
   }
 
 

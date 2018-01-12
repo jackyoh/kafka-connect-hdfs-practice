@@ -39,7 +39,6 @@ class HDFSSinkTask extends SinkTask {
       context.requestCommit()
     })
     initialize(context)
-
   }
 
   override def close(partitions: util.Collection[TopicPartition]): Unit = {
