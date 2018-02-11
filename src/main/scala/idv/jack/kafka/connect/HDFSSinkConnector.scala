@@ -9,13 +9,12 @@ import org.apache.kafka.connect.connector.Task
 import org.apache.kafka.connect.sink.SinkConnector
 
 class HDFSSinkConnector extends SinkConnector{
-
-
+  private val CONFIG_DEF: ConfigDef = new ConfigDef()
+  private var configProperties: util.Map[String, String] = _
 
   override def start(props: util.Map[String, String]): Unit = {
-    //TODO
+    this.configProperties = props
   }
-
 
   override def taskClass(): Class[_ <: Task] = classOf[HDFSSinkTask]
 
@@ -29,16 +28,16 @@ class HDFSSinkConnector extends SinkConnector{
 
   override def taskConfigs(maxTasks: Int): util.List[util.Map[String, String]] = {
     var configs = new util.ArrayList[util.Map[String, String]]()
-    var config = new util.HashMap[String, String]()
-    configs.add(config)
+    var taskProps = new util.HashMap[String, String]()
+    taskProps.putAll(configProperties)
 
     (0 until maxTasks).foreach { i =>
-      configs.add(config)
+       configs.add(taskProps)
     }
     configs
   }
 
   override def config(): ConfigDef = {
-    new ConfigDef()
+    CONFIG_DEF
   }
 }
